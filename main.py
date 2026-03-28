@@ -30,7 +30,7 @@ def run_cli_simulation():
 
     #define the initial state
     initial_inputs = {
-        "video_url" : "",
+        "video_url" : "https://youtu.be/ejrcyKNpUUQs",
         "video_id" :f"vid_{session_id[:8]}",
         "compliance_results" :[],
         "errors":[]
@@ -60,5 +60,5 @@ def run_cli_simulation():
         logger.error(f"Workflow Execution Failed : {str(e)}")
         raise e
     
-if __name__ == "main" :
+if __name__ == "__main__" :
     run_cli_simulation()
