@@ -16,7 +16,7 @@ from langchain_community.vectorstores import AzureSearch
 # set up logging and config
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger("indexer")
 
