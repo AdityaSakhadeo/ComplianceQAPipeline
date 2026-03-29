@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Compliance QA Pipeline — multi-modal video compliance auditing on Azure."
+      content="Compliance QA Pipeline — multi-modal video compliance auditing on Azure. By Aditya Sakhadeo."
     />
     <title>Compliance QA Pipeline</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,6 +37,50 @@
       >
     </header>
 
+    <section class="profile glass" aria-labelledby="profile-title">
+      <div class="profile-inner">
+        <img
+          class="profile-photo"
+          src="assets/profile.png"
+          width="160"
+          height="160"
+          alt="Aditya Sakhadeo"
+        />
+        <div class="profile-text">
+          <h2 id="profile-title" class="profile-name">Aditya Sakhadeo</h2>
+          <p class="profile-headline">
+            MTech @ COEP in Data Sciences · Aspiring ML Engineer · Skilled in ML,
+            MLOps, and React Native · BTech in CS &amp; IT
+          </p>
+          <ul class="profile-skills" aria-label="Focus areas">
+            <li>Machine learning</li>
+            <li>MLOps</li>
+            <li>React Native</li>
+            <li>Azure &amp; LLM pipelines</li>
+          </ul>
+          <h3 class="exp-heading">Experience</h3>
+          <ul class="exp-list">
+            <li>
+              <span class="exp-role">Intern</span>
+              <span class="exp-co">Excellon Software</span>
+              <span class="exp-meta"
+                >Apr 2025 – Jul 2025 · 4 mos · Pune, Maharashtra · On-site</span
+              >
+              <span class="exp-tech">React.js, React Native, +1 skill</span>
+            </li>
+            <li>
+              <span class="exp-role">Intern</span>
+              <span class="exp-co">Excellon Software</span>
+              <span class="exp-meta"
+                >Jan 2024 – Jul 2024 · 7 mos · Pune, Maharashtra · On-site</span
+              >
+              <span class="exp-tech">React.js, React Native</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <main class="layout">
       <section class="panel glass" aria-labelledby="run-title">
         <h2 id="run-title" class="panel-title">Run audit</h2>
@@ -64,22 +108,6 @@
             </button>
           </div>
         </form>
-
-        <div
-          id="alert-quota"
-          class="alert alert-warn"
-          role="alert"
-          hidden
-        >
-          <span class="alert-icon" aria-hidden="true">!</span>
-          <div class="alert-body">
-            <strong>Service temporarily unavailable</strong>
-            <p>
-              Currently out of quota — please try again later. Azure OpenAI /
-              Video Indexer limits may apply on the backend.
-            </p>
-          </div>
-        </div>
 
         <div id="alert-api-error" class="alert alert-error" role="alert" hidden>
           <span class="alert-icon" aria-hidden="true">×</span>
@@ -127,8 +155,41 @@
           rel="noopener noreferrer"
           >ComplianceQAPipeline</a
         >
+        · Live demo:
+        <a
+          href="https://adityasakhadeo.github.io/ComplianceQAPipeline/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub Pages</a
+        >
       </p>
     </footer>
+
+    <!-- Quota notice as modal popup -->
+    <div
+      id="modal-quota"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-quota-title"
+      hidden
+    >
+      <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+      <div class="modal-panel glass">
+        <button type="button" class="modal-close" data-close-modal aria-label="Close">
+          ×
+        </button>
+        <div class="modal-icon-warn" aria-hidden="true">!</div>
+        <h2 id="modal-quota-title" class="modal-title">Service temporarily unavailable</h2>
+        <p class="modal-body">
+          Currently out of quota — please try again later. Azure OpenAI / Video
+          Indexer limits may apply on the backend.
+        </p>
+        <button type="button" class="btn-primary modal-ok" data-close-modal>
+          OK
+        </button>
+      </div>
+    </div>
 
     <script src="js/config.js"></script>
     <script src="js/app.js" defer></script>

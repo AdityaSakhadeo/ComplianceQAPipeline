@@ -5,7 +5,7 @@ const input = document.getElementById("video-url");
 const submitBtn = document.getElementById("submit-btn");
 const btnText = submitBtn.querySelector(".btn-text");
 const btnSpinner = submitBtn.querySelector(".btn-spinner");
-const alertQuota = document.getElementById("alert-quota");
+const modalQuota = document.getElementById("modal-quota");
 const alertApi = document.getElementById("alert-api-error");
 const apiErrorMsg = document.getElementById("api-error-msg");
 const resultSuccess = document.getElementById("result-success");
@@ -17,8 +17,30 @@ function setLoading(loading) {
   btnSpinner.hidden = !loading;
 }
 
+function openQuotaModal() {
+  modalQuota.hidden = false;
+  document.body.classList.add("modal-open");
+  const closeBtn = modalQuota.querySelector(".modal-close");
+  closeBtn.focus();
+}
+
+function closeQuotaModal() {
+  modalQuota.hidden = true;
+  document.body.classList.remove("modal-open");
+}
+
+modalQuota.querySelectorAll("[data-close-modal]").forEach((el) => {
+  el.addEventListener("click", () => closeQuotaModal());
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !modalQuota.hidden) {
+    closeQuotaModal();
+  }
+});
+
 function hideAlerts() {
-  alertQuota.hidden = true;
+  closeQuotaModal();
   alertApi.hidden = true;
   resultSuccess.hidden = true;
 }
@@ -43,7 +65,7 @@ form.addEventListener("submit", async (e) => {
   if (useMock) {
     await new Promise((r) => setTimeout(r, 650));
     setLoading(false);
-    alertQuota.hidden = false;
+    openQuotaModal();
     return;
   }
 

@@ -7,7 +7,7 @@ Static demo UI for **Compliance QA Pipeline**.
 1. Repository **Settings → Pages**.
 2. **Build and deployment**: Source **Deploy from a branch**.
 3. Branch **master** (or **main**), folder **`/docs`**, Save.
-4. After build, open `https://<user>.github.io/ComplianceQAPipeline/`.
+4. After build, open **https://adityasakhadeo.github.io/ComplianceQAPipeline/** (case-insensitive username).
 
 ## Pipeline image
 
