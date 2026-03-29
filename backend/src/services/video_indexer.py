@@ -17,7 +17,7 @@ class VideoIndexerService:
         self.subscription_id = os.getenv("AZURE_VI_SUBSCRIPTION_ID")
         self.resource_group = os.getenv("AZURE_VI_RESOURCE_GROUP")
         self.vi_name = os.getenv("AZURE_VI_NAME","brand-compliance-project")
-        self.credential = DefaultAzureCredential
+        self.credential = DefaultAzureCredential()
 
     def get_access_token(self):
         '''
@@ -26,7 +26,7 @@ class VideoIndexerService:
 
         try:
             token_object = self.credential.get_token("https://management.azure.com/.default")
-            return token_object
+            return token_object.token
         except Exception as e:
             logger.error(f"Failed to get the Azure token : {e}")
             raise
@@ -83,7 +83,7 @@ class VideoIndexerService:
         api_url = f"https://api.videoindexer.ai/{self.location}/Accounts/{self.account_id}/Videos"
 
         parms = {
-            "accessToken":"vi_token",
+            "accessToken":vi_token,
             "name" : video_name,
             "privacy":"Private",
             "indexingPreset":"Default"
@@ -100,41 +100,56 @@ class VideoIndexerService:
         if response.status_code != 200 :
             raise Exception(f"Azure upload Failed : {response.text}")
         
+        video_id = response.json().get("id")
+        logger.info(f"Video uploaded successfully with ID: {video_id}")
+        return video_id
+        
     
-    def wait_for_processing(self,video_id):
-        logger.info(f"Waiting for the video {video_id} to process.....")
-
+    def wait_for_processing(self, video_id):
+        """Polls status until complete."""
+        logger.info(f"Waiting for video {video_id} to process...")
         while True:
             arm_token = self.get_access_token()
             vi_token = self.get_account_token(arm_token)
-
-            url = f"https://api.videoindexer.ai/{self.location}/Accounts/{self.account_id}/Videos"
-            params = {"accessToken":vi_token}
-            response = requests.get(url,params=params)
+            
+            url = f"https://api.videoindexer.ai/{self.location}/Accounts/{self.account_id}/Videos/{video_id}/Index"
+            params = {"accessToken": vi_token}
+            response = requests.get(url, params=params)
             data = response.json()
-
+            
             state = data.get("state")
             if state == "Processed":
-                raise Exception("Video Indexing failed in azure")
-            elif state == "Quarantine":
-                raise Exception("Video quarantine (Copyright/ Content Policy Violation)")
-            logger.info(f"Status {state} ........waiting for 30 sec")
+                logger.info(
+                    "Video Indexer index payload: top-level keys=%s videos=%s",
+                    list(data.keys()),
+                    len(data.get("videos") or []),
+                )
+                return data
+            elif state == "Failed":
+                raise Exception("Video Indexing Failed in Azure.")
+            elif state == "Quarantined":
+                raise Exception("Video Quarantined (Copyright/Content Policy Violation).")
+            
+            logger.info(f"Status: {state}... waiting 30s")
             time.sleep(30)
+
 
 
     def extract_data(self,vi_json):
         'parses the JSON into our state format'
         transcript_lines = []
         for v in vi_json.get("videos",[]):
-            for insight in v.get ("insights",{}).get("transcript,[]"):
-                transcript_lines.append(insight.get("text"))
+            for insight in v.get("insights",{}).get("transcript",[]):
+                if insight.get("text"):
+                    transcript_lines.append(insight.get("text"))
 
         ocr_lines =[]
         for v in vi_json.get("videos",[]):
             for insight in v.get("insights",{}).get("ocr",[]):
-                ocr_lines.append(insight.get("text"))
+                if insight.get("text"):
+                    ocr_lines.append(insight.get("text"))
 
-        return {
+        out = {
             "transcript":" ".join(transcript_lines),
             "ocr_text" : ocr_lines,
             "video_metadata" : {
@@ -142,4 +157,12 @@ class VideoIndexerService:
                 "platform" : "youtube"
             }
 
-        }           
+        }
+        preview = (out["transcript"] or "")[:400]
+        logger.info(
+            "extract_data: transcript_segments=%s ocr_segments=%s transcript_preview=%r",
+            len(transcript_lines),
+            len(ocr_lines),
+            preview + ("..." if len(out["transcript"] or "") > 400 else ""),
+        )
+        return out           

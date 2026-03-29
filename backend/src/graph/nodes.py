@@ -47,7 +47,7 @@ def index_video_node(state:VideoAuditState)->Dict[str,Any]:
         else:
             raise Exception("Please provde a valid Youtube URL for this test")
         # Upload to Azure Video Indexer
-        azure_video_id = vi_service.upload_video(local_path,video_name= video_id_input)
+        azure_video_id = vi_service.upload_video(local_path,video_name=video_id_input)
         logger.info(f"Upload Success. Azure Video ID: {azure_video_id}")
 
         # cleanup
@@ -59,6 +59,12 @@ def index_video_node(state:VideoAuditState)->Dict[str,Any]:
 
         #extract
         clean_data = vi_service.extract_data(raw_insights)
+        logger.info(
+            "[NODE:Indexer] VI extracted: transcript_len=%s ocr_lines=%s metadata=%s",
+            len(clean_data.get("transcript") or ""),
+            len(clean_data.get("ocr_text") or []),
+            clean_data.get("video_metadata"),
+        )
         logger.info("----[NODE:Indexer] Extraction Completed---------")
         return clean_data
 
@@ -87,16 +93,30 @@ def audit_content_node(state:VideoAuditState)->Dict[str,Any]:
             "final_report":"Audit skipped because no transcript was found"
         }
 
-    # Initialize clients
-    llm = AzureChatOpenAI(
-        azure_deployment= os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT"),
-        openai_api_version = os.getenv("AZURE_OPENAI_API_VERSION"),
-        temperature=0.0
+    # Initialize clients (endpoint + api_key explicit — same as backend/scripts/index_documents.py)
+    _api_version = (os.getenv("AZURE_OPENAI_API_VERSION") or "").strip().strip('"') or "2024-12-01-preview"
+    _endpoint = (os.getenv("AZURE_OPENAI_ENDPOINT") or "").strip().strip('"')
+    _embedding_dep = (os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT") or "").strip().strip('"')
+    logger.info(
+        "[NODE:Auditor] Azure OpenAI: endpoint host=%s embedding_deployment=%s api_version=%s",
+        _endpoint.replace("https://", "").split("/")[0] if _endpoint else "(missing)",
+        _embedding_dep or "(missing)",
+        _api_version,
     )
-    
+
+    llm = AzureChatOpenAI(
+        azure_deployment=os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT"),
+        azure_endpoint=_endpoint,
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        openai_api_version=_api_version,
+        temperature=0.0,
+    )
+
     embeddings = AzureOpenAIEmbeddings(
-        azure_deployment= os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT"),
-        openai_api_version = os.getenv("AZURE_OPENAI_API_VERSION"),
+        azure_deployment=_embedding_dep,
+        azure_endpoint=_endpoint,
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        openai_api_version=_api_version,
     )
     
     vector_store = AzureSearch(
