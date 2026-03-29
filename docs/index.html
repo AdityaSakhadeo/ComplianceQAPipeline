@@ -20,6 +20,7 @@
     <div class="bg-mesh" aria-hidden="true"></div>
     <div class="noise" aria-hidden="true"></div>
 
+    <div class="shell">
     <header class="top">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true"></span>
@@ -59,36 +60,42 @@
             <li>Azure &amp; LLM pipelines</li>
           </ul>
           <h3 class="exp-heading">Experience</h3>
-          <ul class="exp-list">
-            <li>
-              <span class="exp-role">Intern</span>
-              <span class="exp-co">Excellon Software</span>
-              <span class="exp-meta"
-                >Apr 2025 – Jul 2025 · 4 mos · Pune, Maharashtra · On-site</span
-              >
-              <span class="exp-tech">React.js, React Native, +1 skill</span>
-            </li>
-            <li>
-              <span class="exp-role">Intern</span>
-              <span class="exp-co">Excellon Software</span>
-              <span class="exp-meta"
-                >Jan 2024 – Jul 2024 · 7 mos · Pune, Maharashtra · On-site</span
-              >
-              <span class="exp-tech">React.js, React Native</span>
-            </li>
-          </ul>
+          <div class="exp-grid">
+            <article class="exp-card">
+              <div class="exp-card-head">
+                <span class="exp-role">Intern</span>
+                <span class="exp-co">Excellon Software</span>
+              </div>
+              <p class="exp-meta">
+                Apr 2025 – Jul 2025 · 4 mos · Pune, Maharashtra · On-site
+              </p>
+              <p class="exp-tech">React.js, React Native, +1 skill</p>
+            </article>
+            <article class="exp-card">
+              <div class="exp-card-head">
+                <span class="exp-role">Intern</span>
+                <span class="exp-co">Excellon Software</span>
+              </div>
+              <p class="exp-meta">
+                Jan 2024 – Jul 2024 · 7 mos · Pune, Maharashtra · On-site
+              </p>
+              <p class="exp-tech">React.js, React Native</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
     <main class="layout">
       <section class="panel glass" aria-labelledby="run-title">
-        <h2 id="run-title" class="panel-title">Run audit</h2>
-        <p class="panel-desc">
-          Paste a YouTube video URL. When the backend is connected, requests are
-          sent to your deployed API (configure in
-          <code>js/config.js</code>).
-        </p>
+        <div class="panel-head">
+          <h2 id="run-title" class="panel-title">Run audit</h2>
+          <p class="panel-desc">
+            Paste a YouTube video URL. When the backend is connected, requests are
+            sent to your deployed API (configure in
+            <code>js/config.js</code>).
+          </p>
+        </div>
 
         <form id="audit-form" class="form" novalidate>
           <label class="field-label" for="video-url">Video URL</label>
@@ -124,11 +131,13 @@
       </section>
 
       <section class="panel glass panel-diagram" aria-labelledby="how-title">
-        <h2 id="how-title" class="panel-title">How it works</h2>
-        <p class="panel-desc">
-          End-to-end flow from URL to structured compliance output (demo sample
-          shown in the diagram).
-        </p>
+        <div class="panel-head">
+          <h2 id="how-title" class="panel-title">How it works</h2>
+          <p class="panel-desc">
+            End-to-end flow from URL to structured compliance output (demo sample
+            shown in the diagram).
+          </p>
+        </div>
         <figure class="diagram-wrap">
           <img
             src="assets/pipeline-architecture.png"
@@ -164,6 +173,7 @@
         >
       </p>
     </footer>
+    </div>
 
     <!-- Quota notice as modal popup -->
     <div
