@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Compliance QA Pipeline — multi-modal video compliance auditing on Azure."
+    />
+    <title>Compliance QA Pipeline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="bg-mesh" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="top">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <h1>Compliance QA Pipeline</h1>
+          <p class="tagline">Azure multi-modal orchestration · LangGraph</p>
+        </div>
+      </div>
+      <a
+        class="gh-link"
+        href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline"
+        target="_blank"
+        rel="noopener noreferrer"
+        >View on GitHub</a
+      >
+    </header>
+
+    <main class="layout">
+      <section class="panel glass" aria-labelledby="run-title">
+        <h2 id="run-title" class="panel-title">Run audit</h2>
+        <p class="panel-desc">
+          Paste a YouTube video URL. When the backend is connected, requests are
+          sent to your deployed API (configure in
+          <code>js/config.js</code>).
+        </p>
+
+        <form id="audit-form" class="form" novalidate>
+          <label class="field-label" for="video-url">Video URL</label>
+          <div class="input-wrap">
+            <input
+              id="video-url"
+              name="video_url"
+              type="url"
+              inputmode="url"
+              autocomplete="url"
+              placeholder="https://www.youtube.com/watch?v=…"
+              required
+            />
+            <button type="submit" class="btn-primary" id="submit-btn">
+              <span class="btn-text">Analyze</span>
+              <span class="btn-spinner" hidden aria-hidden="true"></span>
+            </button>
+          </div>
+        </form>
+
+        <div
+          id="alert-quota"
+          class="alert alert-warn"
+          role="alert"
+          hidden
+        >
+          <span class="alert-icon" aria-hidden="true">!</span>
+          <div class="alert-body">
+            <strong>Service temporarily unavailable</strong>
+            <p>
+              Currently out of quota — please try again later. Azure OpenAI /
+              Video Indexer limits may apply on the backend.
+            </p>
+          </div>
+        </div>
+
+        <div id="alert-api-error" class="alert alert-error" role="alert" hidden>
+          <span class="alert-icon" aria-hidden="true">×</span>
+          <div class="alert-body">
+            <strong>Request failed</strong>
+            <p id="api-error-msg"></p>
+          </div>
+        </div>
+
+        <div id="result-success" class="result-card" hidden>
+          <h3 class="result-title">Response</h3>
+          <pre id="result-json" class="result-pre"></pre>
+        </div>
+      </section>
+
+      <section class="panel glass panel-diagram" aria-labelledby="how-title">
+        <h2 id="how-title" class="panel-title">How it works</h2>
+        <p class="panel-desc">
+          End-to-end flow from URL to structured compliance output (demo sample
+          shown in the diagram).
+        </p>
+        <figure class="diagram-wrap">
+          <img
+            src="assets/pipeline-architecture.png"
+            alt="Architecture: YouTube URL flows through download, Azure Video Indexer for transcript and OCR, Azure AI Search RAG, Azure OpenAI auditor, to a compliance report output."
+            width="1200"
+            height="675"
+            loading="lazy"
+            class="diagram-img"
+          />
+          <figcaption class="diagram-caption">
+            Input → ingest &amp; index → retrieve rules → LLM audit → JSON
+            report
+          </figcaption>
+        </figure>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>
+        Open source —
+        <a
+          href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline"
+          target="_blank"
+          rel="noopener noreferrer"
+          >ComplianceQAPipeline</a
+        >
+      </p>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
