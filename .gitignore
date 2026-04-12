@@ -1,3 +1,26 @@
+# Local secrets
 .env
-#exclude the pdfs from git which in the folder enterprise-rag-platform/data/raw/pdfs
-enterprise-rag-platform/data/raw/pdfs/*
+.env.*
+
+# --- Enterprise RAG: large / regenerable data (keep repo under GitHub limits) ---
+# Source PDFs (often 100MB+ total; add your own copies locally)
+enterprise-rag-platform/data/raw/pdfs/*.pdf
+
+# Chroma vector DB (rebuild: python -m ekip index)
+enterprise-rag-platform/data/vectorstore/*
+!enterprise-rag-platform/data/vectorstore/.gitkeep
+
+# Ingest output (rebuild: python -m ekip ingest)
+enterprise-rag-platform/data/processed/*.jsonl
+!enterprise-rag-platform/data/processed/.gitkeep
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
