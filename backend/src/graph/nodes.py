@@ -130,29 +130,32 @@ def audit_content_node(state:VideoAuditState)->Dict[str,Any]:
     ocr_text = state.get("ocr_text",[])
     query_text = f"{transcript} {''.join(ocr_text)}"
     docs = vector_store.similarity_search(query_text , k=3)
-    retrieved_rules = "/n/n".join([doc.page_content for doc in docs])
+    retrieved_rules = "\n\n".join([doc.page_content for doc in docs])
 
     system_prompt = f"""
     You are a senior brand compliance auditor.
     OFFICIAL REGULATORY RULES:
     {retrieved_rules}
     INSTRUCTIONS:
-    1.Analyze the transcript and OCR text below.
-    2.Identify any violations of the rules.
-    3.Return strictly JSON in the following format:
+    1. Analyze the transcript and OCR text below.
+    2. Identify any violations of the rules.
+    3. Return strictly JSON with this exact shape (no markdown fences, no commentary):
     {{
-    "compliance_results":[
-    {{
-        "category":"Claim Validation",
-        "severity : "CRITICAL",
-        "description":"Explanation of the violation..."
-    }}
-    ],
-    "status":"FAIL",
-    "final_report":"Summary of findings..."
+      "compliance_results": [
+        {{
+          "category": "Claim Validation",
+          "severity": "CRITICAL",
+          "description": "Explanation of the violation..."
+        }}
+      ],
+      "status": "FAIL",
+      "final_report": "Summary of findings..."
     }}
 
-    If no violations are found, set "status" to "PASS" and "compliance_results" to []
+    Rules:
+    - severity must be one of: CRITICAL, WARNING, INFO (use CRITICAL for serious violations).
+    - If no violations are found, set "status" to "PASS" and "compliance_results" to [].
+    - "final_report" is a short plain-text summary for stakeholders.
     """
 
     user_message = f"""
@@ -168,8 +171,10 @@ def audit_content_node(state:VideoAuditState)->Dict[str,Any]:
         ])
         content = response.content
         if "```" in content:
-            content = re.search(r"```(?:json)?(.?)```",content,re.DOTALL).group(1)
-        
+            m = re.search(r"```(?:json)?\s*(.*?)```", content, re.DOTALL)
+            if m:
+                content = m.group(1)
+
         audit_data = json.loads(content.strip())
         return{
             "compliance_results" :audit_data.get("compliance_results",[]),

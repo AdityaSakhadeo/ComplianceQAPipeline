@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Compliance QA Pipeline — multi-modal video compliance auditing on Azure. By Aditya Sakhadeo."
+      content="Enterprise Knowledge Intelligence (RAG) and Compliance QA Pipeline — demos by Aditya Sakhadeo."
     />
-    <title>Compliance QA Pipeline</title>
+    <title>EKIP RAG &amp; Compliance QA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,161 +21,300 @@
     <div class="noise" aria-hidden="true"></div>
 
     <div class="shell">
-    <header class="top">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <div>
-          <h1>Compliance QA Pipeline</h1>
-          <p class="tagline">Azure multi-modal orchestration · LangGraph</p>
-        </div>
-      </div>
-      <a
-        class="gh-link"
-        href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline"
-        target="_blank"
-        rel="noopener noreferrer"
-        >View on GitHub</a
-      >
-    </header>
-
-    <section class="profile glass" aria-labelledby="profile-title">
-      <div class="profile-inner">
-        <img
-          class="profile-photo"
-          src="assets/profile.png"
-          width="160"
-          height="160"
-          alt="Aditya Sakhadeo"
-        />
-        <div class="profile-text">
-          <h2 id="profile-title" class="profile-name">Aditya Sakhadeo</h2>
-          <p class="profile-headline">
-            MTech @ COEP in Data Sciences · Aspiring ML Engineer · Skilled in ML,
-            MLOps, and React Native · BTech in CS &amp; IT
-          </p>
-          <ul class="profile-skills" aria-label="Focus areas">
-            <li>Machine learning</li>
-            <li>MLOps</li>
-            <li>React Native</li>
-            <li>Azure &amp; LLM pipelines</li>
-          </ul>
-          <h3 class="exp-heading">Experience</h3>
-          <div class="exp-grid">
-            <article class="exp-card">
-              <div class="exp-card-head">
-                <span class="exp-role">Intern</span>
-                <span class="exp-co">Excellon Software</span>
-              </div>
-              <p class="exp-meta">
-                Apr 2025 – Jul 2025 · 4 mos · Pune, Maharashtra · On-site
-              </p>
-              <p class="exp-tech">React.js, React Native, +1 skill</p>
-            </article>
-            <article class="exp-card">
-              <div class="exp-card-head">
-                <span class="exp-role">Intern</span>
-                <span class="exp-co">Excellon Software</span>
-              </div>
-              <p class="exp-meta">
-                Jan 2024 – Jul 2024 · 7 mos · Pune, Maharashtra · On-site
-              </p>
-              <p class="exp-tech">React.js, React Native</p>
-            </article>
+      <header class="top">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <h1>Portfolio demos</h1>
+            <p class="tagline">
+              Enterprise Knowledge Intelligence (RAG) · Compliance QA (Azure)
+            </p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <main class="layout">
-      <section class="panel glass" aria-labelledby="run-title">
-        <div class="panel-head">
-          <h2 id="run-title" class="panel-title">Run audit</h2>
-          <p class="panel-desc">
-            Paste a YouTube video URL. When the backend is connected, requests are
-            sent to your deployed API (configure in
-            <code>js/config.js</code>).
-          </p>
-        </div>
-
-        <form id="audit-form" class="form" novalidate>
-          <label class="field-label" for="video-url">Video URL</label>
-          <div class="input-wrap">
-            <input
-              id="video-url"
-              name="video_url"
-              type="url"
-              inputmode="url"
-              autocomplete="url"
-              placeholder="https://www.youtube.com/watch?v=…"
-              required
-            />
-            <button type="submit" class="btn-primary" id="submit-btn">
-              <span class="btn-text">Analyze</span>
-              <span class="btn-spinner" hidden aria-hidden="true"></span>
-            </button>
-          </div>
-        </form>
-
-        <div id="alert-api-error" class="alert alert-error" role="alert" hidden>
-          <span class="alert-icon" aria-hidden="true">×</span>
-          <div class="alert-body">
-            <strong>Request failed</strong>
-            <p id="api-error-msg"></p>
-          </div>
-        </div>
-
-        <div id="result-success" class="result-card" hidden>
-          <h3 class="result-title">Response</h3>
-          <pre id="result-json" class="result-pre"></pre>
-        </div>
-      </section>
-
-      <section class="panel glass panel-diagram" aria-labelledby="how-title">
-        <div class="panel-head">
-          <h2 id="how-title" class="panel-title">How it works</h2>
-          <p class="panel-desc">
-            End-to-end flow from URL to structured compliance output (demo sample
-            shown in the diagram).
-          </p>
-        </div>
-        <figure class="diagram-wrap">
-          <img
-            src="assets/pipeline-architecture.png"
-            alt="Architecture: YouTube URL flows through download, Azure Video Indexer for transcript and OCR, Azure AI Search RAG, Azure OpenAI auditor, to a compliance report output."
-            width="1200"
-            height="675"
-            loading="lazy"
-            class="diagram-img"
-          />
-          <figcaption class="diagram-caption">
-            Input → ingest &amp; index → retrieve rules → LLM audit → JSON
-            report
-          </figcaption>
-        </figure>
-      </section>
-    </main>
-
-    <footer class="foot">
-      <p>
-        Open source —
         <a
+          class="gh-link"
           href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline"
           target="_blank"
           rel="noopener noreferrer"
-          >ComplianceQAPipeline</a
+          >View on GitHub</a
         >
-        · Live demo:
-        <a
-          href="https://adityasakhadeo.github.io/ComplianceQAPipeline/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub Pages</a
+      </header>
+
+      <section class="profile glass" aria-labelledby="profile-title">
+        <div class="profile-inner">
+          <img
+            class="profile-photo"
+            src="assets/profile.png"
+            width="160"
+            height="160"
+            alt="Aditya Sakhadeo"
+          />
+          <div class="profile-text">
+            <h2 id="profile-title" class="profile-name">Aditya Sakhadeo</h2>
+            <p class="profile-headline">
+              MTech @ COEP in Data Sciences · Aspiring ML Engineer · Skilled in ML,
+              MLOps, and React Native · BTech in CS &amp; IT
+            </p>
+            <ul class="profile-skills" aria-label="Focus areas">
+              <li>Machine learning</li>
+              <li>MLOps</li>
+              <li>React Native</li>
+              <li>Azure &amp; LLM pipelines</li>
+            </ul>
+            <h3 class="exp-heading">Experience</h3>
+            <div class="exp-grid">
+              <article class="exp-card">
+                <div class="exp-card-head">
+                  <span class="exp-role">Intern</span>
+                  <span class="exp-co">Excellon Software</span>
+                </div>
+                <p class="exp-meta">
+                  Apr 2025 – Jul 2025 · 4 mos · Pune, Maharashtra · On-site
+                </p>
+                <p class="exp-tech">React.js, React Native, +1 skill</p>
+              </article>
+              <article class="exp-card">
+                <div class="exp-card-head">
+                  <span class="exp-role">Intern</span>
+                  <span class="exp-co">Excellon Software</span>
+                </div>
+                <p class="exp-meta">
+                  Jan 2024 – Jul 2024 · 7 mos · Pune, Maharashtra · On-site
+                </p>
+                <p class="exp-tech">React.js, React Native</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main class="main-stack">
+        <p class="service-kicker">Service 1 · Enterprise Knowledge Intelligence</p>
+        <section
+          class="panel glass rag-service-panel"
+          id="enterprise-rag"
+          aria-labelledby="rag-title"
         >
-      </p>
-    </footer>
+          <div class="panel-head rag-panel-head">
+            <div>
+              <h2 id="rag-title" class="panel-title">
+                Enterprise Knowledge Intelligence Platform
+              </h2>
+              <p class="panel-desc rag-tagline">
+                Python · RAG · Chroma · metadata filters · LLM synthesis
+              </p>
+            </div>
+            <a
+              class="gh-link"
+              href="https://github.com/AdityaSakhadeo/EnterpriseKnowledgeRAG"
+              target="_blank"
+              rel="noopener noreferrer"
+              >RAG repo on GitHub</a
+            >
+          </div>
+
+          <p class="panel-desc rag-lead">
+            Metadata-aware retrieval over enterprise PDFs: chunk, embed, and query with
+            citation lines tied to source files and pages—then optionally ground an LLM on
+            those passages (same flow as <code>python -m ekip query</code> in the
+            project).
+          </p>
+
+          <div class="rag-io-grid">
+            <figure class="rag-io-figure">
+              <figcaption class="rag-io-label">Input (question)</figcaption>
+              <div class="diagram-wrap rag-io-wrap">
+                <img
+                  src="assets/rag-query-input.png"
+                  alt="Screenshot: natural-language question typed into the EKIP query interface."
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  class="diagram-img rag-io-img"
+                />
+              </div>
+              <p class="rag-io-caption">
+                Users ask in plain language; optional filters (document type, year, etc.)
+                narrow the vector search.
+              </p>
+            </figure>
+            <figure class="rag-io-figure">
+              <figcaption class="rag-io-label">Output (answer + citations)</figcaption>
+              <div class="diagram-wrap rag-io-wrap">
+                <img
+                  src="assets/rag-query-output.png"
+                  alt="Screenshot: model answer with numbered citations pointing to PDF pages."
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  class="diagram-img rag-io-img"
+                />
+              </div>
+              <p class="rag-io-caption">
+                Response includes grounded text and a citation index mapping to sources
+                (file, page span, metadata).
+              </p>
+            </figure>
+          </div>
+
+          <h3 class="rag-subhead">Try a question</h3>
+          <p class="panel-desc rag-try-desc">
+            On GitHub Pages the demo uses <strong>sample answers</strong> unless you set
+            <code>ragApiBaseUrl</code> in <code>js/config.js</code> to a running
+            <code>uvicorn api.app:app</code> backend. Tap a suggestion or type your own.
+          </p>
+
+          <div class="sample-queries" role="group" aria-label="Sample questions">
+            <button
+              type="button"
+              class="query-chip"
+              data-rag-suggest="What was the company's operating result in its first reporting period?"
+            >
+              Operating result (first period)
+            </button>
+            <button
+              type="button"
+              class="query-chip"
+              data-rag-suggest="Who chaired the board in the early annual report?"
+            >
+              Board &amp; leadership
+            </button>
+            <button
+              type="button"
+              class="query-chip"
+              data-rag-suggest="Which industry verticals were mentioned for new customers?"
+            >
+              Customer verticals
+            </button>
+          </div>
+
+          <form id="rag-form" class="form rag-form" novalidate>
+            <label class="field-label" for="rag-question">Your question</label>
+            <textarea
+              id="rag-question"
+              name="question"
+              class="rag-textarea"
+              rows="4"
+              required
+              placeholder="e.g. Summarize revenue and loss figures from the first annual report…"
+            ></textarea>
+            <div class="rag-actions">
+              <button type="submit" class="btn-primary" id="rag-submit-btn">
+                <span class="btn-text">Ask</span>
+                <span class="btn-spinner" hidden aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+
+          <p id="rag-mode-note" class="rag-mode-note" hidden></p>
+
+          <div id="rag-alert-error" class="alert alert-error" role="alert" hidden>
+            <span class="alert-icon" aria-hidden="true">×</span>
+            <div class="alert-body">
+              <strong>Request failed</strong>
+              <p id="rag-error-msg"></p>
+            </div>
+          </div>
+
+          <div id="rag-result" class="result-card rag-result-card" hidden>
+            <h3 class="result-title">Answer</h3>
+            <div id="rag-answer-text" class="rag-answer-text"></div>
+            <h4 class="rag-citations-title">Citations</h4>
+            <pre id="rag-citations-pre" class="result-pre rag-citations-pre"></pre>
+          </div>
+        </section>
+
+        <p class="service-kicker" id="compliance-qa">Service 2 · Compliance QA Pipeline</p>
+        <div class="layout">
+          <section class="panel glass" aria-labelledby="run-title">
+            <div class="panel-head">
+              <h2 id="run-title" class="panel-title">Run audit</h2>
+              <p class="panel-desc">
+                Paste a YouTube video URL. When the backend is connected, requests are
+                sent to your deployed API (configure in
+                <code>js/config.js</code>).
+              </p>
+            </div>
+
+            <form id="audit-form" class="form" novalidate>
+              <label class="field-label" for="video-url">Video URL</label>
+              <div class="input-wrap">
+                <input
+                  id="video-url"
+                  name="video_url"
+                  type="url"
+                  inputmode="url"
+                  autocomplete="url"
+                  placeholder="https://www.youtube.com/watch?v=…"
+                  required
+                />
+                <button type="submit" class="btn-primary" id="submit-btn">
+                  <span class="btn-text">Analyze</span>
+                  <span class="btn-spinner" hidden aria-hidden="true"></span>
+                </button>
+              </div>
+            </form>
+
+            <div id="alert-api-error" class="alert alert-error" role="alert" hidden>
+              <span class="alert-icon" aria-hidden="true">×</span>
+              <div class="alert-body">
+                <strong>Request failed</strong>
+                <p id="api-error-msg"></p>
+              </div>
+            </div>
+
+            <div id="result-success" class="result-card" hidden>
+              <h3 class="result-title">Response</h3>
+              <pre id="result-json" class="result-pre"></pre>
+            </div>
+          </section>
+
+          <section class="panel glass panel-diagram" aria-labelledby="how-title">
+            <div class="panel-head">
+              <h2 id="how-title" class="panel-title">How it works</h2>
+              <p class="panel-desc">
+                End-to-end flow from URL to structured compliance output (demo sample
+                shown in the diagram).
+              </p>
+            </div>
+            <figure class="diagram-wrap">
+              <img
+                src="assets/pipeline-architecture.png"
+                alt="Architecture: YouTube URL flows through download, Azure Video Indexer for transcript and OCR, Azure AI Search RAG, Azure OpenAI auditor, to a compliance report output."
+                width="1200"
+                height="675"
+                loading="lazy"
+                class="diagram-img"
+              />
+              <figcaption class="diagram-caption">
+                Input → ingest &amp; index → retrieve rules → LLM audit → JSON
+                report
+              </figcaption>
+            </figure>
+          </section>
+        </div>
+      </main>
+
+      <footer class="foot">
+        <p>
+          Open source —
+          <a
+            href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline"
+            target="_blank"
+            rel="noopener noreferrer"
+            >ComplianceQAPipeline</a
+          >
+          (includes <code>enterprise-rag-platform</code>) · Live demo:
+          <a
+            href="https://adityasakhadeo.github.io/ComplianceQAPipeline/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub Pages</a
+          >
+        </p>
+      </footer>
     </div>
 
-    <!-- Quota notice as modal popup -->
     <div
       id="modal-quota"
       class="modal"
@@ -202,6 +341,7 @@
     </div>
 
     <script src="js/config.js"></script>
+    <script src="js/rag-app.js" defer></script>
     <script src="js/app.js" defer></script>
   </body>
 </html>

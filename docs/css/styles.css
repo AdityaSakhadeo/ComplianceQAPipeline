@@ -304,10 +304,27 @@ body.modal-open {
   line-height: 1.4;
 }
 
-.layout {
+.main-stack {
   position: relative;
   z-index: 1;
   padding: 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+}
+
+.service-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.layout {
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: var(--section-gap);
   grid-template-columns: 1fr;
@@ -318,6 +335,10 @@ body.modal-open {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr);
     align-items: stretch;
     gap: 1.5rem;
+  }
+
+  .panel-span-full {
+    grid-column: 1 / -1;
   }
 }
 
@@ -585,6 +606,199 @@ body.modal-open {
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.rag-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem 1.25rem;
+}
+
+.rag-panel-head .gh-link {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.rag-tagline {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  font-family: var(--mono);
+  color: var(--muted);
+}
+
+.rag-lead {
+  margin: 0 0 1rem;
+}
+
+.rag-highlights {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.rag-highlights li {
+  margin-bottom: 0.65rem;
+}
+
+.rag-highlights li:last-child {
+  margin-bottom: 0;
+}
+
+.rag-mono {
+  font-family: var(--mono);
+  font-size: 0.92em;
+  color: var(--accent);
+}
+
+.rag-io-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  margin: 1rem 0 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .rag-io-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.rag-io-figure {
+  margin: 0;
+}
+
+.rag-io-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.rag-io-wrap {
+  margin: 0;
+}
+
+.rag-io-img {
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  object-position: top center;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.rag-io-caption {
+  margin: 0.65rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.rag-subhead {
+  margin: 1.25rem 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.rag-try-desc {
+  margin-bottom: 0.75rem;
+}
+
+.sample-queries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.query-chip {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text);
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.query-chip:hover {
+  border-color: rgba(124, 240, 214, 0.45);
+  background: rgba(124, 240, 214, 0.08);
+}
+
+.rag-form .rag-textarea {
+  width: 100%;
+  min-height: 5.5rem;
+  margin-top: 0.5rem;
+  padding: 0.88rem 1rem;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.rag-form .rag-textarea::placeholder {
+  color: rgba(154, 146, 176, 0.75);
+}
+
+.rag-form .rag-textarea:focus {
+  outline: none;
+  border-color: rgba(124, 240, 214, 0.45);
+  box-shadow: 0 0 0 3px rgba(124, 240, 214, 0.12);
+}
+
+.rag-actions {
+  margin-top: 0.85rem;
+}
+
+.rag-mode-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+.rag-result-card {
+  margin-top: 1rem;
+}
+
+.rag-answer-text {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--text);
+}
+
+.rag-citations-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.rag-citations-pre {
+  max-height: 14rem;
+  overflow: auto;
+  margin: 0;
+  font-size: 0.78rem;
 }
 
 .foot {
