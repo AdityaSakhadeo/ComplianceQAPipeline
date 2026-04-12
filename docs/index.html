@@ -122,22 +122,49 @@
           <figure class="diagram-wrap rag-arch-figure">
             <img
               src="assets/ekip-architecture.png"
-              alt="Architecture: PDFs through extract and chunking to JSONL, embeddings into Chroma vector store, user query with metadata filters, retrieval, LLM synthesis, answer with citations."
+              alt="Architecture: PDF ingest to Chroma, Streamlit or optional FastAPI serves queries; portfolio links to Streamlit or calls REST when configured."
               width="1200"
               height="675"
               loading="lazy"
               class="diagram-img"
             />
             <figcaption class="diagram-caption">
-              Ingest → embed &amp; index → metadata-aware retrieval → LLM → cited answer
+              Ingest → Chroma → Streamlit UI (or REST) → answers with citations
+              (local: <code>streamlit run streamlit_app.py</code>)
             </figcaption>
           </figure>
 
-          <h3 class="rag-subhead">Ask a question</h3>
-          <p class="panel-desc rag-try-desc">
-            Requires a deployed RAG API. Set <code>ragApiBaseUrl</code> in
-            <code>js/config.js</code>. Use a suggestion below or type your own question.
-          </p>
+          <h3 class="rag-subhead">Try the RAG demo</h3>
+          <div id="rag-streamlit-wrap" class="rag-streamlit-wrap">
+            <p class="panel-desc rag-try-desc">
+              Primary: run the Streamlit app locally or on
+              <a
+                href="https://streamlit.io/cloud"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Streamlit Cloud</a
+              >, then set <code>streamlitRagUrl</code> in <code>js/config.js</code>.
+            </p>
+            <a
+              id="rag-streamlit-link"
+              class="btn-primary rag-streamlit-cta"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Open Streamlit RAG</a
+            >
+            <p id="rag-streamlit-hint" class="panel-desc rag-streamlit-hint" hidden>
+              Configure <code>streamlitRagUrl</code> in <code>js/config.js</code> after you
+              deploy (see <code>enterprise-rag-platform/STREAMLIT.md</code>).
+            </p>
+          </div>
+
+          <details class="rag-api-details">
+            <summary>Optional: ask via REST API (FastAPI)</summary>
+            <p class="panel-desc rag-try-desc">
+              Set <code>ragApiBaseUrl</code> in <code>js/config.js</code> when
+              <code>uvicorn api.app:app</code> is deployed with CORS. Sample questions:
+            </p>
 
           <div class="sample-queries" role="group" aria-label="Sample questions">
             <button
@@ -195,6 +222,7 @@
             <h4 class="rag-citations-title">Citations</h4>
             <pre id="rag-citations-pre" class="result-pre rag-citations-pre"></pre>
           </div>
+          </details>
         </section>
 
         <p class="service-kicker" id="compliance-qa">Service 2 · Compliance QA Pipeline</p>
@@ -274,7 +302,13 @@
             rel="noopener noreferrer"
             >Source on GitHub</a
           >
-          — includes <code>enterprise-rag-platform</code> (RAG API +
+          — includes <code>enterprise-rag-platform</code> (Streamlit RAG +
+          <a
+            href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline/blob/main/enterprise-rag-platform/STREAMLIT.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Streamlit guide</a
+          >,
           <a
             href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline/blob/main/enterprise-rag-platform/DEPLOY-FREE.md"
             target="_blank"

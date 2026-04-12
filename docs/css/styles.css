@@ -462,6 +462,17 @@ body {
   cursor: not-allowed;
 }
 
+a.btn-primary {
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+a.btn-primary[aria-disabled="true"] {
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn-spinner {
   width: 18px;
   height: 18px;
@@ -630,6 +641,42 @@ body {
 
 .rag-arch-figure {
   margin: 1rem 0 1.25rem;
+}
+
+.rag-streamlit-wrap {
+  margin-bottom: 1rem;
+}
+
+.rag-streamlit-cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  text-align: center;
+}
+
+.rag-streamlit-hint {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.rag-api-details {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.rag-api-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.rag-api-details[open] summary {
+  margin-bottom: 0.75rem;
+  color: var(--text);
 }
 
 .rag-subhead {

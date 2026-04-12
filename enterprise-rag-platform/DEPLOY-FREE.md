@@ -26,9 +26,21 @@ The frontend calls **`POST /api/rag/query`** with JSON `{ "question": "..." }`. 
 
 Similar to Render: GitHub repo, Dockerfile or buildpack, set `PORT` and env vars.
 
+## Option D — [Streamlit](https://streamlit.io/) (recommended RAG UI)
+
+Interactive app: **`streamlit_app.py`** (same `answer_query` logic as FastAPI).
+
+- **Local:** `pip install -r requirements.txt` then `streamlit run streamlit_app.py`
+- **Cloud:** [Streamlit Community Cloud](https://streamlit.io/cloud) — see **`STREAMLIT.md`**
+
+Paste your public Streamlit URL into **`docs/js/config.js`** → **`streamlitRagUrl`** for the portfolio “Open Streamlit RAG” button.
+
+**Optional REST API** (for the embedded form on Pages): still deploy `uvicorn api.app:app` and set **`ragApiBaseUrl`**.
+
 ## After deploy
 
-1. Copy the public URL (no trailing slash) into **`docs/js/config.js`** → `EKIP_RAG_CONFIG.ragApiBaseUrl`.
-2. Redeploy or refresh GitHub Pages.
+1. For **Streamlit**, copy the app URL into **`docs/js/config.js`** → `streamlitRagUrl` (no trailing slash).
+2. For **REST only**, set `ragApiBaseUrl` instead (or both).
+3. Redeploy or refresh GitHub Pages.
 
 **Note:** `sentence-transformers` + Chroma need **RAM**; free tiers may OOM on first embed. If that happens, use a host with **≥1 GB RAM** or switch embedding strategy in code for a lighter model.

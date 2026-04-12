@@ -1,6 +1,22 @@
 (function () {
   const ragCfg = window.EKIP_RAG_CONFIG || {};
 
+  const streamlitUrl = String(ragCfg.streamlitRagUrl || "").replace(/\/$/, "");
+  const streamlitLink = document.getElementById("rag-streamlit-link");
+  const streamlitHint = document.getElementById("rag-streamlit-hint");
+  if (streamlitLink) {
+    if (streamlitUrl) {
+      streamlitLink.href = streamlitUrl;
+      streamlitLink.removeAttribute("aria-disabled");
+      if (streamlitHint) streamlitHint.hidden = true;
+    } else {
+      streamlitLink.href = "#";
+      streamlitLink.setAttribute("aria-disabled", "true");
+      streamlitLink.addEventListener("click", (e) => e.preventDefault());
+      if (streamlitHint) streamlitHint.hidden = false;
+    }
+  }
+
   const form = document.getElementById("rag-form");
   const textarea = document.getElementById("rag-question");
   const submitBtn = document.getElementById("rag-submit-btn");
@@ -56,7 +72,7 @@
     if (!base) {
       if (errMsg && alertEl) {
         errMsg.textContent =
-          "Set ragApiBaseUrl in js/config.js to your deployed RAG API URL (see enterprise-rag-platform/DEPLOY-FREE.md).";
+          "Set ragApiBaseUrl for REST mode, or use the Streamlit app (set streamlitRagUrl). See enterprise-rag-platform/STREAMLIT.md.";
         alertEl.hidden = false;
       }
       return;

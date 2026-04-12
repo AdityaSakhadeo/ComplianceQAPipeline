@@ -1,19 +1,25 @@
 # Site (`docs/`)
 
-Portfolio UI for **EKIP RAG** and **Compliance QA**. Both features call **your deployed APIs**; set base URLs in **`js/config.js`**.
+Portfolio UI for **EKIP RAG** (Streamlit + optional REST) and **Compliance QA**.
+
+Configure **`js/config.js`**:
+
+- **`streamlitRagUrl`** — public Streamlit app (primary RAG demo button).
+- **`ragApiBaseUrl`** — optional FastAPI for the in-page REST form under “Optional: ask via REST API”.
+- **`apiBaseUrl`** — compliance audit API.
 
 ## Host this folder
 
-In the repository **Settings → Pages**, deploy from branch **`main`** or **`master`**, folder **`/docs`**.
+Repository **Settings → Pages** → branch **`main`** / **`master`**, folder **`/docs`**.
 
 ## Assets
 
-- `assets/ekip-architecture.png` — RAG pipeline diagram.
-- `assets/pipeline-architecture.png` — compliance pipeline diagram.
+- `assets/ekip-architecture.png` — RAG diagram (see also `../enterprise-rag-platform/ekip-architecture.png`).
+- `assets/pipeline-architecture.png` — compliance pipeline.
 
-## Backends
+## RAG
 
-- **RAG:** `POST /api/rag/query` with JSON `{ "question": "..." }`. Deploy with Docker or `uvicorn` — see **`../enterprise-rag-platform/DEPLOY-FREE.md`**.
-- **Compliance:** `POST /api/audit` with `{ "video_url": "..." }`.
+- **Streamlit:** `../enterprise-rag-platform/STREAMLIT.md`
+- **REST / Docker / hosts:** `../enterprise-rag-platform/DEPLOY-FREE.md`
 
-Enable **CORS** on each API for your site origin (e.g. `https://<user>.github.io`).
+Enable **CORS** on any REST API for your Pages origin.
