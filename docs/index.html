@@ -114,54 +114,29 @@
           </div>
 
           <p class="panel-desc rag-lead">
-            Metadata-aware retrieval over enterprise PDFs: chunk, embed, and query with
-            citation lines tied to source files and pages—then optionally ground an LLM on
-            those passages (same flow as <code>python -m ekip query</code> in the
-            project).
+            Metadata-aware retrieval over enterprise PDFs: extract and chunk text, embed
+            into Chroma, filter by document metadata, retrieve top passages, then ground an
+            LLM answer with explicit source citations.
           </p>
 
-          <div class="rag-io-grid">
-            <figure class="rag-io-figure">
-              <figcaption class="rag-io-label">Input (question)</figcaption>
-              <div class="diagram-wrap rag-io-wrap">
-                <img
-                  src="assets/rag-query-input.png"
-                  alt="Screenshot: natural-language question typed into the EKIP query interface."
-                  width="800"
-                  height="450"
-                  loading="lazy"
-                  class="diagram-img rag-io-img"
-                />
-              </div>
-              <p class="rag-io-caption">
-                Users ask in plain language; optional filters (document type, year, etc.)
-                narrow the vector search.
-              </p>
-            </figure>
-            <figure class="rag-io-figure">
-              <figcaption class="rag-io-label">Output (answer + citations)</figcaption>
-              <div class="diagram-wrap rag-io-wrap">
-                <img
-                  src="assets/rag-query-output.png"
-                  alt="Screenshot: model answer with numbered citations pointing to PDF pages."
-                  width="800"
-                  height="450"
-                  loading="lazy"
-                  class="diagram-img rag-io-img"
-                />
-              </div>
-              <p class="rag-io-caption">
-                Response includes grounded text and a citation index mapping to sources
-                (file, page span, metadata).
-              </p>
-            </figure>
-          </div>
+          <figure class="diagram-wrap rag-arch-figure">
+            <img
+              src="assets/ekip-architecture.png"
+              alt="Architecture: PDFs through extract and chunking to JSONL, embeddings into Chroma vector store, user query with metadata filters, retrieval, LLM synthesis, answer with citations."
+              width="1200"
+              height="675"
+              loading="lazy"
+              class="diagram-img"
+            />
+            <figcaption class="diagram-caption">
+              Ingest → embed &amp; index → metadata-aware retrieval → LLM → cited answer
+            </figcaption>
+          </figure>
 
-          <h3 class="rag-subhead">Try a question</h3>
+          <h3 class="rag-subhead">Ask a question</h3>
           <p class="panel-desc rag-try-desc">
-            On GitHub Pages the demo uses <strong>sample answers</strong> unless you set
-            <code>ragApiBaseUrl</code> in <code>js/config.js</code> to a running
-            <code>uvicorn api.app:app</code> backend. Tap a suggestion or type your own.
+            Requires a deployed RAG API. Set <code>ragApiBaseUrl</code> in
+            <code>js/config.js</code>. Use a suggestion below or type your own question.
           </p>
 
           <div class="sample-queries" role="group" aria-label="Sample questions">
@@ -206,8 +181,6 @@
             </div>
           </form>
 
-          <p id="rag-mode-note" class="rag-mode-note" hidden></p>
-
           <div id="rag-alert-error" class="alert alert-error" role="alert" hidden>
             <span class="alert-icon" aria-hidden="true">×</span>
             <div class="alert-body">
@@ -230,9 +203,8 @@
             <div class="panel-head">
               <h2 id="run-title" class="panel-title">Run audit</h2>
               <p class="panel-desc">
-                Paste a YouTube video URL. When the backend is connected, requests are
-                sent to your deployed API (configure in
-                <code>js/config.js</code>).
+                Paste a YouTube video URL. Set <code>apiBaseUrl</code> in
+                <code>js/config.js</code> to your deployed compliance API.
               </p>
             </div>
 
@@ -273,8 +245,7 @@
             <div class="panel-head">
               <h2 id="how-title" class="panel-title">How it works</h2>
               <p class="panel-desc">
-                End-to-end flow from URL to structured compliance output (demo sample
-                shown in the diagram).
+                End-to-end flow from URL to structured compliance output.
               </p>
             </div>
             <figure class="diagram-wrap">
@@ -297,47 +268,21 @@
 
       <footer class="foot">
         <p>
-          Open source —
           <a
             href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline"
             target="_blank"
             rel="noopener noreferrer"
-            >ComplianceQAPipeline</a
+            >Source on GitHub</a
           >
-          (includes <code>enterprise-rag-platform</code>) · Live demo:
+          — includes <code>enterprise-rag-platform</code> (RAG API +
           <a
-            href="https://adityasakhadeo.github.io/ComplianceQAPipeline/"
+            href="https://github.com/AdityaSakhadeo/ComplianceQAPipeline/blob/main/enterprise-rag-platform/DEPLOY-FREE.md"
             target="_blank"
             rel="noopener noreferrer"
-            >GitHub Pages</a
-          >
+            >deploy guide</a
+          >)
         </p>
       </footer>
-    </div>
-
-    <div
-      id="modal-quota"
-      class="modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-quota-title"
-      hidden
-    >
-      <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
-      <div class="modal-panel glass">
-        <button type="button" class="modal-close" data-close-modal aria-label="Close">
-          ×
-        </button>
-        <div class="modal-icon-warn" aria-hidden="true">!</div>
-        <h2 id="modal-quota-title" class="modal-title">Service temporarily unavailable</h2>
-        <p class="modal-body">
-          Currently out of quota — please try again later. Azure OpenAI / Video
-          Indexer limits may apply on the backend.
-        </p>
-        <button type="button" class="btn-primary modal-ok" data-close-modal>
-          OK
-        </button>
-      </div>
     </div>
 
     <script src="js/config.js"></script>

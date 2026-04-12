@@ -1,57 +1,6 @@
 (function () {
   const ragCfg = window.EKIP_RAG_CONFIG || {};
 
-  const DEMO_SCENARIOS = [
-    {
-      suggest:
-        "What was the company's operating result in its first reporting period?",
-      match: (q) =>
-        /operating|loss|profit|financial|revenue|march\s*31.*2003|first.*report|crore/i.test(
-          q,
-        ),
-      answer: `For the period ended March 31, 2003, the annual report shows revenue from business process management services of Rs. 20.85 crore, cost of revenues Rs. 14.49 crore, gross profit Rs. 6.36 crore, and an operating loss of Rs. 4.32 crore (depreciation Rs. 1.39 crore). After other items, loss after tax was Rs. 3.15 crore. [1]`,
-      citations: `[1] annual-report-2002-2003.pdf (pages 3-3) — type=annual-report, year=2003`,
-    },
-    {
-      suggest: "Who chaired the board in the early annual report?",
-      match: (q) =>
-        /board|chairman|director|mohandas|pai|akshaya|bhargava|auditors/i.test(q),
-      answer: `The report lists Mr. T. V. Mohandas Pai as Chairman, Mr. Akshaya Bhargava as Managing Director and CEO, additional directors, and M/s Bharat S. Raut & Co. as auditors (Bangalore). [1][2]`,
-      citations: `[1] annual-report-2002-2003.pdf (pages 2-2) — type=annual-report, year=2003\n[2] annual-report-2002-2003.pdf (pages 2-2) — type=annual-report, year=2003`,
-    },
-    {
-      suggest: "Which industry verticals were mentioned for new customers?",
-      match: (q) =>
-        /customer|vertical|banking|telecom|financial\s*service|added/i.test(q),
-      answer: `The company added three customers in banking and financial services and two in telecommunications during its first period of operations. [1]`,
-      citations: `[1] annual-report-2002-2003.pdf (pages 3-3) — type=annual-report, year=2003`,
-    },
-  ];
-
-  function pickDemo(question) {
-    const q = question.trim();
-    for (let i = 0; i < DEMO_SCENARIOS.length; i++) {
-      const d = DEMO_SCENARIOS[i];
-      if (d.match(q)) {
-        return {
-          mode: "demo",
-          question: q,
-          answer: d.answer,
-          citations: d.citations,
-        };
-      }
-    }
-    return {
-      mode: "demo_fallback",
-      question: q,
-      answer: `No scripted match for that exact wording. This browser demo uses fixed sample answers tied to the indexed annual-report corpus. For real vector retrieval and LLM synthesis, deploy the FastAPI service under enterprise-rag-platform and set ragApiBaseUrl in config.js.
-
-Try one of these:
-${DEMO_SCENARIOS.map((d) => "• " + d.suggest).join("\n")}`,
-      citations: "",
-    };
-  }
-
   const form = document.getElementById("rag-form");
   const textarea = document.getElementById("rag-question");
   const submitBtn = document.getElementById("rag-submit-btn");
@@ -64,7 +13,6 @@ ${DEMO_SCENARIOS.map((d) => "• " + d.suggest).join("\n")}`,
   const resultEl = document.getElementById("rag-result");
   const answerEl = document.getElementById("rag-answer-text");
   const citationsEl = document.getElementById("rag-citations-pre");
-  const modeNote = document.getElementById("rag-mode-note");
 
   function setRagLoading(loading) {
     submitBtn.disabled = loading;
@@ -77,15 +25,11 @@ ${DEMO_SCENARIOS.map((d) => "• " + d.suggest).join("\n")}`,
     if (resultEl) resultEl.hidden = true;
   }
 
-  function showResult(payload, sourceLabel) {
+  function showResult(payload) {
     if (!resultEl || !answerEl || !citationsEl) return;
     answerEl.textContent = payload.answer || "";
     citationsEl.textContent = payload.citations || "(no citation block)";
     resultEl.hidden = false;
-    if (modeNote) {
-      modeNote.textContent = sourceLabel;
-      modeNote.hidden = false;
-    }
   }
 
   document.querySelectorAll("[data-rag-suggest]").forEach((btn) => {
@@ -109,26 +53,19 @@ ${DEMO_SCENARIOS.map((d) => "• " + d.suggest).join("\n")}`,
     }
 
     const base = String(ragCfg.ragApiBaseUrl || "").replace(/\/$/, "");
-    const useLive =
-      base.length > 0 && ragCfg.useRagMockOnly !== true;
-
-    setRagLoading(true);
-
-    if (!useLive) {
-      await new Promise((r) => setTimeout(r, 400));
-      const demo = pickDemo(question);
-      showResult(
-        demo,
-        demo.mode === "demo"
-          ? "Demo mode — sample answer (connect API for live RAG)"
-          : "Demo mode — try a suggested question or deploy the API",
-      );
-      setRagLoading(false);
+    if (!base) {
+      if (errMsg && alertEl) {
+        errMsg.textContent =
+          "Set ragApiBaseUrl in js/config.js to your deployed RAG API URL (see enterprise-rag-platform/DEPLOY-FREE.md).";
+        alertEl.hidden = false;
+      }
       return;
     }
 
     const path = ragCfg.ragQueryPath || "/api/rag/query";
     const url = `${base}${path.startsWith("/") ? path : `/${path}`}`;
+
+    setRagLoading(true);
 
     try {
       const res = await fetch(url, {
@@ -156,13 +93,10 @@ ${DEMO_SCENARIOS.map((d) => "• " + d.suggest).join("\n")}`,
         else msg = (data && data.message) || text || res.statusText;
         throw new Error(msg);
       }
-      showResult(
-        {
-          answer: data.answer || "",
-          citations: data.citations || "",
-        },
-        "Live API — Chroma retrieval + optional LLM",
-      );
+      showResult({
+        answer: data.answer || "",
+        citations: data.citations || "",
+      });
     } catch (err) {
       if (errMsg && alertEl) {
         errMsg.textContent =

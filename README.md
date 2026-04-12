@@ -2,9 +2,9 @@
 
 Azure multi-modal compliance orchestration: **Video Indexer** → transcript/OCR → **Azure AI Search** (RAG) → **Azure OpenAI** (LangGraph).
 
-## Live demo (GitHub Pages)
+## Portfolio site (GitHub Pages)
 
-Enable **Settings → Pages** with source **`/docs`**. The static UI lives in [`docs/`](docs/); configure a backend URL in [`docs/js/config.js`](docs/js/config.js) when you deploy an API.
+Enable **Settings → Pages** with source **`/docs`**. The UI is in [`docs/`](docs/); set API base URLs in [`docs/js/config.js`](docs/js/config.js). RAG API deployment options: [`enterprise-rag-platform/DEPLOY-FREE.md`](enterprise-rag-platform/DEPLOY-FREE.md).
 
 ## Run locally
 

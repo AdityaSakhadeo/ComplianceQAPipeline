@@ -1,34 +1,19 @@
-# GitHub Pages site
+# Site (`docs/`)
 
-Static demo UI for **Compliance QA Pipeline**.
+Portfolio UI for **EKIP RAG** and **Compliance QA**. Both features call **your deployed APIs**; set base URLs in **`js/config.js`**.
 
-## Enable Pages
+## Host this folder
 
-1. Repository **Settings → Pages**.
-2. **Build and deployment**: Source **Deploy from a branch**.
-3. Branch **master** (or **main**), folder **`/docs`**, Save.
-4. After build, open **https://adityasakhadeo.github.io/ComplianceQAPipeline/** (case-insensitive username).
+In the repository **Settings → Pages**, deploy from branch **`main`** or **`master`**, folder **`/docs`**.
 
-## Pipeline image
+## Assets
 
-`assets/pipeline-architecture.png` — architecture diagram (input → processing → demo output).
+- `assets/ekip-architecture.png` — RAG pipeline diagram.
+- `assets/pipeline-architecture.png` — compliance pipeline diagram.
 
-## Backend connection
+## Backends
 
-GitHub Pages only hosts static files. To call your Python pipeline:
+- **RAG:** `POST /api/rag/query` with JSON `{ "question": "..." }`. Deploy with Docker or `uvicorn` — see **`../enterprise-rag-platform/DEPLOY-FREE.md`**.
+- **Compliance:** `POST /api/audit` with `{ "video_url": "..." }`.
 
-1. Deploy an HTTP API (e.g. Azure App Service, Container Apps, or FastAPI behind a URL).
-2. Enable **CORS** for your Pages origin (`https://<user>.github.io`).
-3. Edit **`js/config.js`**:
-
-```js
-window.COMPLIANCE_QA_CONFIG = {
-  apiBaseUrl: "https://your-api.example.com",
-  useMockQuotaMessage: false,
-  auditPath: "/api/audit",
-};
-```
-
-4. Implement `POST /api/audit` with JSON body `{ "video_url": "..." }` returning your audit JSON.
-
-While `useMockQuotaMessage` is `true` or `apiBaseUrl` is empty, **Analyze** shows the static quota message (safe public demo).
+Enable **CORS** on each API for your site origin (e.g. `https://<user>.github.io`).
